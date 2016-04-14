@@ -10,6 +10,7 @@ ee.on('done', (fileArray) => {
     if (err) return console.log(err);
 
     console.log(data.toString());
+    console.log(data);
     ee.emit('done', fileArray);
   });
 });

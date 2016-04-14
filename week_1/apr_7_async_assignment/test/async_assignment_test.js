@@ -5,7 +5,7 @@ const FileParser = require(__dirname + '/../ee_refactor');
 describe('async order', () => {
   beforeEach(() => {
     this.files = [ __dirname + '/three.txt',
-                   __dirname + '/two.txt', 
+                   __dirname + '/two.txt',
                    __dirname + '/one.txt'];
     this.testStream = {
       data: '',
