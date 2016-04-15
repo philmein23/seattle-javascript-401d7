@@ -1,0 +1,19 @@
+#!/usr/bin/env node
+const filePromise = require(__dirname + '/../lib/file_promise');
+const fs = require('fs');
+
+var file = filePromise(process.argv[2])
+  .then((data) => {
+    return data.toString().toUpperCase();
+  })
+  .then((data) => {
+    process.stdout.write(data);
+    return data;
+  })
+  .then((data) => {
+    var out = fs.createWriteStream(process.argv[2] + '_upper');
+    out.write(data);
+  })
+  .catch((e) => {
+    console.log(e);
+  });
