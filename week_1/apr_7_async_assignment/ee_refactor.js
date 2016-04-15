@@ -29,6 +29,6 @@ FileParser.prototype.start = function() {
 };
 
 
-var files = ['three.txt', 'two.txt', 'one.txt'];
-var fp = new FileParser(files, () => {});
-fp.start();
+// var files = ['three.txt', 'two.txt', 'one.txt'];
+// var fp = new FileParser(files, () => {});
+// fp.start();

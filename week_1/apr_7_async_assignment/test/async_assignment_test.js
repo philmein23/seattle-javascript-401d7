@@ -18,6 +18,7 @@ describe('async order', () => {
   it('should read files in order', (done) => {
     var fp = new FileParser(this.files, function(stream) {
       expect(stream.data).to.eql('one\ntwo\nthree\ndone');
+      process.stdout.write(stream.data);
       done();
     }, this.testStream);
     fp.start();
