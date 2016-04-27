@@ -14,7 +14,6 @@ describe('our server', () => {
       .get('localhost:3000/')
       .end((err, res) => {
         assert((res.status === 200), 'server did not send 200');
-        debugger;
         assert((res.body.msg === 'hello world!'), 'server did not greet us');
         done();
       });
