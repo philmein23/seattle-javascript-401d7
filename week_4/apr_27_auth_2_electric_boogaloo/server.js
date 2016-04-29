@@ -1,3 +1,4 @@
+require('dotenv').config();
 if (!process.env.APP_SECRET)
   throw new Error('You need to set the APP_SECRET environment variable');
 const express = require('express');
