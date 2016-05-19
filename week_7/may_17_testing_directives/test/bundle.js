@@ -47,7 +47,7 @@
 	const angular = __webpack_require__(1);
 	__webpack_require__(3);
 	__webpack_require__(4);
-	__webpack_require__(5);
+	__webpack_require__(9);
 
 
 /***/ },
@@ -33950,35 +33950,101 @@
 	const angular = __webpack_require__(1);
 	const demoApp = angular.module('demoApp', []);
 	
-	demoApp.controller('DemoController', ['$scope', function($scope) {
-	}]);
-	
-	demoApp.directive('cfDummyDirective', function() {
-	  return {
-	    restrict: 'AC',
-	    templateUrl: 'templates/dummy_directive.html',
-	    scope: {
-	      unicorns: '=',
-	      rainbows: '@'
-	    },
-	    controller: ['$scope', function($scope) {
-	      $scope.rainbows = $scope.rainbows || 'default';
-	      $scope.unicorns = $scope.unicorns || 'hello from default';
-	    }]
-	  };
+	__webpack_require__(5)(demoApp);
+	demoApp.controller('TasksController', function() {
+	  this.tasks = [
+	    {desc: 'finish this code demo'},
+	    {desc: 'upload screen caps'},
+	    {desc: 'commit code'},
+	    {desc: 'create a directive assignment'}
+	  ];
 	});
-	
-	demoApp.run(['$rootScope', function($rs) {
-	  $rs.greeting = 'hello world';
-	}]);
 
 
 /***/ },
 /* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
+	module.exports = function(app) {
+	  __webpack_require__(6)(app);
+	  __webpack_require__(7)(app);
+	  __webpack_require__(8)(app);
+	};
+
+
+/***/ },
+/* 6 */
+/***/ function(module, exports) {
+
+	module.exports = function(app) {
+	  app.directive('cfDummyDirective', function() {
+	    return {
+	      restrict: 'AC',
+	      templateUrl: 'templates/dummy_directive.html',
+	      scope: {
+	        unicorns: '=',
+	        rainbows: '@'
+	      },
+	      controller: ['$scope', function($scope) {
+	        $scope.rainbows = $scope.rainbows || 'default';
+	        $scope.unicorns = $scope.unicorns || 'hello from default';
+	      }]
+	    };
+	  });
+	}
+
+
+/***/ },
+/* 7 */
+/***/ function(module, exports) {
+
+	module.exports = function(app) {
+	  app.directive('taskItem', function() {
+	    return {
+	      restrict: 'EAC',
+	      templateUrl: 'templates/task_item.html',
+	      require: '^taskList',
+	      scope: {
+	        task: '='
+	      },
+	      link: function(scope, element, attrs, controller) {
+	        scope.done = controller.completeTask;
+	      }
+	    }
+	  });
+	};
+
+
+/***/ },
+/* 8 */
+/***/ function(module, exports) {
+
+	module.exports = function(app) {
+	  app.directive('taskList', function() {
+	    return {
+	      restrict: 'EAC',
+	      replace: true,
+	      templateUrl: 'templates/task_list.html',
+	      scope: {
+	        tasks: '=',
+	        listTitle: '@'
+	      },
+	      controller: function($scope) {
+	        this.completeTask = function(task) {
+	          $scope.tasks.splice($scope.tasks.indexOf(task), 1);
+	        }
+	      }
+	    }
+	  });
+	};
+
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
 	const angular = __webpack_require__(1);
-	const dummyTemplate = __webpack_require__(6);
+	const dummyTemplate = __webpack_require__(10);
 	
 	describe('dummy directive', function() {
 	  beforeEach(angular.mock.module('demoApp'));
@@ -34002,22 +34068,23 @@
 	    var link = $compile('<div data-cf-dummy-directive data-unicorns="greeting"></div>');
 	    var directive = link($scope);
 	    $httpBackend.flush();
+	    $scope.$digest();
 	    var h1 = directive.find('h1');
 	    var h2 = directive.find('h2');
 	    expect(h1.text()).toEqual($scope.greeting);
 	    expect(h2.text()).toEqual('default');
-	
 	    var input = directive.find('input');
-	    input.val('another value');
-	    $rootScope.$digest();
 	    debugger;
-	    expect(h1.text()).toEqual('another value');
+	    input.val('some new value');
+	    input.triggerHandler('input');
+	    $scope.$apply();
+	    expect($scope.greeting).toEqual('some new value');
 	  });
 	});
 
 
 /***/ },
-/* 6 */
+/* 10 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1>{{unicorns}}</h1>\n<h2>{{rainbows}}</h2>\n<input type=\"text\" data-ng-model=\"unicorns\">\n<input type=\"text\" data-ng-model=\"rainbows\">\n";

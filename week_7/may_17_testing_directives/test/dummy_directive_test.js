@@ -23,9 +23,14 @@ describe('dummy directive', function() {
     var link = $compile('<div data-cf-dummy-directive data-unicorns="greeting"></div>');
     var directive = link($scope);
     $httpBackend.flush();
+    $scope.$digest();
     var h1 = directive.find('h1');
     var h2 = directive.find('h2');
     expect(h1.text()).toEqual($scope.greeting);
     expect(h2.text()).toEqual('default');
+    var input = directive.find('input');
+    input.val('some new value');
+    input.triggerHandler('input');
+    expect($scope.greeting).toEqual('some new value');
   });
 });

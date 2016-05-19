@@ -3,10 +3,12 @@ module.exports = function(app) {
     return {
       restrict: 'EAC',
       replace: true,
+      transclude: true,
       templateUrl: 'templates/task_list.html',
       scope: {
         tasks: '=',
-        listTitle: '@'
+        listTitle: '@',
+        description: '@'
       },
       controller: function($scope) {
         this.completeTask = function(task) {

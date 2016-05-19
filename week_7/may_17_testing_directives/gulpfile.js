@@ -43,4 +43,5 @@ gulp.task('css:dev', () => {
 });
 
 gulp.task('build:dev', ['webpack:dev', 'static:dev', 'css:dev']);
+gulp.task('test', ['webpack:test']);
 gulp.task('default', ['build:dev']);
