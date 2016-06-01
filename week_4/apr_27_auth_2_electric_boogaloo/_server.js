@@ -4,6 +4,12 @@ const bearsRouter = require(__dirname + '/routes/bearsrouter');
 const authRouter = require(__dirname + '/routes/auth_router');
 const mongoose = require('mongoose');
 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
+
 app.use('/api', bearsRouter);
 app.use('/api', authRouter);
 
