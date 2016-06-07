@@ -1,6 +1,7 @@
 var baseUrl = require('../../config').baseUrl;
 module.exports = function(app) {
   app.controller('SignUpController', ['$http', '$location',  'cfHandleError', 'cfAuth', function($http, $location, handleError, auth) {
+    // AUTH_EXP: how does this differ from the sign_in_controller
     this.signup = true;
     this.errors = [];
     this.buttonText = 'Create New User!'

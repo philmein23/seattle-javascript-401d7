@@ -2,6 +2,8 @@ var baseUrl = require('../../config').baseUrl;
 
 module.exports = function(app) {
   app.factory('cfAuth', ['$http', '$q', function($http, $q) {
+    // AUTH_EXP: explain what each of these functions are accomplishing and
+    // what data we're storing in this service
     return {
       removeToken: function() {
         this.token = null;

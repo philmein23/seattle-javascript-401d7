@@ -1,6 +1,7 @@
 var baseUrl = require('../../config').baseUrl;
 module.exports = function(app) {
   app.controller('SignInController', ['$http', '$location', 'cfHandleError', 'cfAuth', function($http, $location, handleError, auth) {
+    // AUTH_EXP: how does this differ from the sign_up_controller?
     this.buttonText = 'Sign in to existing user';
     this.errors = [];
     this.authenticate = function(user) {

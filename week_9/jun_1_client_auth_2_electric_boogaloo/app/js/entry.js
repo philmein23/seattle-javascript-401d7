@@ -12,6 +12,8 @@ demoApp.config(['$routeProvider', function($rp) {
       controller: 'BearsController',
       controllerAs: 'bearsctrl'
     })
+    // AUTH_EXP: how do the signin/up routes differ and what is their relationship
+    // with one another
     .when('/signup', {
       templateUrl: 'templates/auth/views/auth_view.html',
       controller: 'SignUpController',
